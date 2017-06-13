@@ -1,0 +1,60 @@
+--drop tables
+DROP TABLE blog_members CASCADE CONSTRAINTS;
+DROP TABLE blog_blogs CASCADE CONSTRAINTS;
+DROP TABLE blog_comments CASCADE CONSTRAINTS;
+
+--drop sequences
+DROP SEQUENCE blog_blog_id_seq;
+DROP SEQUENCE blog_comment_id_seq;
+
+--create sequences
+CREATE SEQUENCE blog_blog_id_seq INCREMENT BY 1 START WITH 1 MAXVALUE 999999999 MINVALUE 1;
+CREATE SEQUENCE blog_comment_id_seq INCREMENT BY 1 START WITH 1 MAXVALUE 999999999 MINVALUE 1;
+
+--create tables
+CREATE TABLE blog_members (
+  username VARCHAR2(50) PRIMARY KEY NOT NULL,
+  email VARCHAR2(50) UNIQUE NOT NULL,
+  password VARCHAR2(50) NOT NULL,
+  date_of_birth DATE NOT NULL
+);
+
+CREATE TABLE blog_blogs (
+  blog_id NUMBER(9) PRIMARY KEY NOT NULL,
+  username VARCHAR2(50) NOT NULL,
+  date_of_publication DATE NOT NULL,
+  title VARCHAR2(500) NOT NULL,
+  content VARCHAR2(4000) NOT NULL,
+  
+  CONSTRAINT
+  blog_blogs_username_FK
+  FOREIGN KEY
+  (username)
+  REFERENCES
+  blog_members (username)
+);
+
+CREATE TABLE blog_comments (
+  comment_id NUMBER(9) PRIMARY KEY NOT NULL,
+  username VARCHAR2(50) NOT NULL,
+  blog_id NUMBER(9) NOT NULL,
+  date_of_publication DATE NOT NULL,
+  content VARCHAR2(4000) NOT NULL,
+  
+  CONSTRAINT
+  blog_comments_username_FK
+  FOREIGN KEY
+  (username)
+  REFERENCES
+  blog_members (username),
+  
+  CONSTRAINT
+  blog_comments_blog_id_FK
+  FOREIGN KEY
+  (blog_id)
+  REFERENCES
+  blog_blogs (blog_id)
+  ON DELETE CASCADE;
+);
+
+COMMIT;
