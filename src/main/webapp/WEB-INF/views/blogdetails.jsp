@@ -61,18 +61,16 @@ form {
 						<form id="delete" method="post" action="DeletePost">
 							<input type="hidden" class="form-control" id="blogId"
 								name="blogId" value="${blog.blogId}">
-							<button onclick="return confirmToDelete();" type="submit"
+							<button onclick="return confirmToDeletePost();" type="submit"
 								class="btn btn-danger">Delete</button>
 						</form>
-						
-							<a href="homepage"><button class="btn btn-default">
-									Back</button></a>
+
+						<a href="homepage"><button class="btn btn-default">Back</button></a>
 					</div>
 				</c:when>
 
 				<c:otherwise>
-					<a href="homepage"><button class="btn btn-default">
-							Back</button></a>
+					<button class="btn btn-default" onclick="goBack()">Back</button>
 				</c:otherwise>
 
 			</c:choose>
@@ -107,12 +105,28 @@ form {
 				</h5>
 				<br>
 				<pre>${row.content}</pre>
+
+				<c:if test="${sessionUser.username eq row.username}">
+					<form method="post" action="DeleteComment">
+						<input type="hidden" class="form-control" id="commentId"
+							name="commentId" value="${row.comment_id}">
+						<button onclick="return confirmToDeleteComment();" type="submit"
+							class="btn btn-danger btn-sm">Delete</button>
+					</form>
+				</c:if>
+
+
 			</c:forEach>
 
 
 			<script>
-				function confirmToDelete() {
-					var r = confirm("Are you sure you want to delete ${blog.title}?")
+				function confirmToDeletePost() {
+					var r = confirm("Are you sure you want to delete ${blog.title}?");
+					return r;
+				}
+
+				function confirmToDeleteComment() {
+					var r = confirm("Are you sure you want to delete your comment?");
 					return r;
 				}
 
@@ -120,6 +134,10 @@ form {
 					document.getElementById('count').innerHTML = "Characters left: "
 							+ (4000 - this.value.length) + "/4000";
 				};
+
+				function goBack() {
+					window.history.back();
+				}
 			</script>
 		</div>
 	</div>
