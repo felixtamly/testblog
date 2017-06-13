@@ -1,8 +1,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<link href="https://fonts.googleapis.com/css?family=Overpass" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
 <style>
 body {
 	background-color: #99CCFF;
+	font-family: 'Nunito', sans-serif;
+}
+
+.navbar {
+	font-family: 'Overpass', sans-serif;
+	font-size: 1.2em;
 }
 
 #welcomeback {
@@ -28,6 +36,7 @@ body {
 					<li><a href="homepage">Home</a></li>
 					<li><a href="writeblog">Write a post</a></li>
 					<li><a href="listYourPosts">Your posts</a></li>
+					<li><a href="listYourDetails">Your Details</a></li>
 					<li><a href="Logout">Log out</a></li>
 				</c:otherwise>
 			</c:choose>

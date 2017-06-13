@@ -19,5 +19,7 @@ public interface MemberDAO {
 
 	boolean removeMember(String username);
 
+	long findNumberOfPostsByMember(Member member);
+
 
 }

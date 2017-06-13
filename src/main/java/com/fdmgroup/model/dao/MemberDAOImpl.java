@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import com.fdmgroup.model.entity.Member;
@@ -56,6 +57,21 @@ public class MemberDAOImpl implements MemberDAO {
 			return true;
 		else
 			return false;
+	}
+
+	@Override
+	public long findNumberOfPostsByMember(Member member) {
+
+		TypedQuery<Long> query = em
+				.createQuery("Select count(b) from BLOG_BLOGS b group by b.member having b.member.username = :username",
+						Long.class)
+				.setParameter("username", member.getUsername());
+		try {			
+			long numberOfBlogs = query.getSingleResult();
+			return numberOfBlogs;
+		} catch (NoResultException e) {
+			return 0;
+		}
 	}
 
 	@Override

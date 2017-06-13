@@ -25,7 +25,7 @@ public class LogInController {
 			session.setAttribute("sessionUser", member);
 			return "redirect:/homepage";
 		} else {
-			System.out.println("wrong");
+			model.addAttribute("loginErrorMessage", "The username and/or password do(es) not match our record. Please try again.");
 			return "login";
 		}
 	}

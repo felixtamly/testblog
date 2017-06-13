@@ -43,7 +43,7 @@ form {
 				<fmt:formatDate type="both" dateStyle="long" timeStyle="long"
 					value="${blog.dateOfPublication}" var="formattedDate" />
 				<span class="glyphicon glyphicon-time"></span> Post by
-				${blog.member.username}, ${formattedDate}.
+				${blog.member.username}, ${formattedDate}
 			</h5>
 			<br>
 			<pre>${blog.content}</pre>
@@ -97,12 +97,12 @@ form {
 			<c:forEach var="row" items="${result.rows}">
 				<hr>
 				<h3>${row.title}</h3>
-				<h5>
+				<h6>
 					<fmt:formatDate type="both" dateStyle="long" timeStyle="long"
 						value="${row.date_of_publication}" var="formattedDate" />
-					<span class="glyphicon glyphicon-time"></span> Post by
-					${row.username}, ${formattedDate}.
-				</h5>
+					<span class="glyphicon glyphicon-comment"></span> Comment by
+					${row.username}, ${formattedDate}
+				</h6>
 				<br>
 				<pre>${row.content}</pre>
 

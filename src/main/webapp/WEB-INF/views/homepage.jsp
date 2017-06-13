@@ -16,6 +16,14 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+.buttonAsText {
+	background: none;
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+</style>
 </head>
 
 <body>
@@ -31,12 +39,19 @@
 
 
 				<h2>${blog.title}</h2>
-				<h5>
-					<fmt:formatDate type="both" dateStyle="long" timeStyle="long"
-						value="${blog.dateOfPublication}" var="formattedDate" />
-					<span class="glyphicon glyphicon-time"></span> Post by
-					${blog.member.username}, ${formattedDate}
-				</h5>
+				<form method="get" action="listYourDetails">
+					<h5>
+						<fmt:formatDate type="both" dateStyle="long" timeStyle="long"
+							value="${blog.dateOfPublication}" var="formattedDate" />
+						<span class="glyphicon glyphicon-time"></span> Post by <input
+							type="hidden" class="form-control" id="username" name="username"
+							value="${blog.member.username}">
+						<button class="buttonAsText" type="submit">
+							<strong>${blog.member.username}</strong>,
+						</button>
+						${formattedDate}
+					</h5>
+				</form>
 				<br>
 				<div class="container">
 					<c:choose>

@@ -36,4 +36,9 @@ public class MenuController {
 		return "editblog";
 	}
 	
+	@RequestMapping("/memberdetails")
+	public String goToMemberDetailsPage() {
+		return "memberdetails";
+	}
+	
 }
