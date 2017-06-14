@@ -58,3 +58,48 @@ CREATE TABLE blog_comments (
 );
 
 COMMIT;
+
+-- MySQL
+CREATE TABLE blog_members (
+  username VARCHAR(50) PRIMARY KEY NOT NULL,
+  email VARCHAR(50) UNIQUE NOT NULL,
+  password VARCHAR(50) NOT NULL,
+  date_of_birth DATE NOT NULL
+);
+CREATE TABLE blog_blogs (
+  blog_id INT(9) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  username VARCHAR(50) NOT NULL,
+  date_of_publication DATE NOT NULL,
+  title VARCHAR(500) NOT NULL,
+  content VARCHAR(4000) NOT NULL,
+  
+  CONSTRAINT
+  blog_blogs_username_FK
+  FOREIGN KEY
+  (username)
+  REFERENCES
+  blog_members (username)
+);
+CREATE TABLE blog_comments (
+  comment_id INT(9) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  username VARCHAR(50) NOT NULL,
+  blog_id INT(9) NOT NULL,
+  date_of_publication DATE NOT NULL,
+  content VARCHAR(4000) NOT NULL,
+  
+  CONSTRAINT
+  blog_comments_username_FK
+  FOREIGN KEY
+  (username)
+  REFERENCES
+  blog_members (username),
+  
+  CONSTRAINT
+  blog_comments_blog_id_FK
+  FOREIGN KEY
+  (blog_id)
+  REFERENCES
+  blog_blogs (blog_id)
+  ON DELETE CASCADE
+);
+COMMIT;
