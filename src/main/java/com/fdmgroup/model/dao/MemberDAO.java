@@ -21,5 +21,7 @@ public interface MemberDAO {
 
 	long findNumberOfPostsByMember(Member member);
 
+	boolean updatePassword(Member member, String password);
+
 
 }

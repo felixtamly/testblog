@@ -18,4 +18,11 @@ public class ViewAllBlogsService {
 		return blogDAO.listBlogs();
 	}
 	
+	public List<Blog> listAllBlogsByPage(int pageId) {
+		EntityManager em = connection.connect();
+		BlogDAO blogDAO = new BlogDAOImpl(em);
+		
+		return blogDAO.getBlogsByPage(pageId);
+	}
+	
 }

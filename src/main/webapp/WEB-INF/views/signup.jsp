@@ -18,6 +18,8 @@
 <body>
 	<jsp:include page="navbar.jsp" />
 	<div class="container">
+		<p style="color:red">${registrationError}</p>
+
 		<form method="post" action="Signup">
 			<div class="form-group">
 				<label for="username">Username:</label> <input type="text"
@@ -34,8 +36,15 @@
 					class="form-control" name="password" placeholder="Enter password"
 					required>
 			</div>
+
 			<div class="form-group">
-				<label for="dateOfBirth">Date of Birth:</label> <input type="date"
+				<label for="password">Re-enter password:</label> <input
+					type="password" class="form-control" name="reenteredPassword"
+					placeholder="Re-enter password" required>
+			</div>
+
+			<div class="form-group">
+				<label for="dateOfBirth">Date of birth:</label> <input type="date"
 					class="form-control" name="dateOfBirth" required>
 			</div>
 			<button type="submit" class="btn btn-default">Submit</button>

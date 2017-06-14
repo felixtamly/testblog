@@ -6,15 +6,22 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import com.fdmgroup.model.entity.Blog;
 import com.fdmgroup.model.entity.Member;
 
 public class BlogDAOImpl implements BlogDAO {
 
 	private EntityManager em;
+	JdbcTemplate template;
 
 	public BlogDAOImpl(EntityManager em) {
 		this.em = em;
+	}
+	
+	public void setTemplate(JdbcTemplate template) {
+		this.template = template;
 	}
 
 	@Override
@@ -128,7 +135,35 @@ public class BlogDAOImpl implements BlogDAO {
 		} else {
 			return false;
 		}
-
+	}
+	
+	@Override
+	public List<Blog> getBlogsByPage(int pageId) {
+		List<Blog> trimmedResultList = null;
+		int begin = pageId*5-5;
+		int end = pageId*5;
+		
+		String jpql = "Select b from BLOG_BLOGS b order by b.dateOfPublication desc";
+		TypedQuery<Blog> queryResult = em.createQuery(jpql, Blog.class);
+		List<Blog> resultList = queryResult.getResultList();
+		for(Blog blog : resultList) System.out.println(blog.getBlogId());
+					
+			trimmedResultList = resultList.subList(begin, end);
+		
+		for(Blog blog : trimmedResultList) System.out.println("trimmed: " + blog.getBlogId());
+		
+		return trimmedResultList;
+//		return template.query(jpql, new RowMapper<Blog>(){
+//			public Blog mapRow(ResultSet rs, int row) throws SQLException {
+//				Blog blog = new Blog();
+//				blog.setBlogId(rs.getInt(1));
+//				blog.setMember(rs.getObject(2, Member.class));
+//				blog.setDateOfPublication(rs.getDate(3));
+//				blog.setTitle(rs.getString(4));
+//				blog.setContent(rs.getString(5));
+//				return blog;
+//			}
+//		});
 	}
 
 }

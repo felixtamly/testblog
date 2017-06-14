@@ -5,7 +5,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>${sessionUser.username}'sDetails</title>
+<c:choose>
+	<c:when test="${sessionUser.username eq viewingMember.username}">
+		<title>Your details</title>
+	</c:when>
+	<c:otherwise>
+		<title>${viewingMember.username}'sdetails</title>
+	</c:otherwise>
+</c:choose>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -25,7 +32,7 @@
 				<h1>Your details</h1>
 			</c:when>
 			<c:otherwise>
-				<h1>${viewingMember.username}'s details</h1>
+				<h1>${viewingMember.username}'sdetails</h1>
 			</c:otherwise>
 		</c:choose>
 		<br>
@@ -45,7 +52,34 @@
 			</p>
 
 		</div>
+
+		<c:if test="${sessionUser.username eq viewingMember.username}">
+			<div class="jumbotron">
+
+				<h2>Change your password</h2>
+				<br>
+				<p style="color: red">${changePasswordError}</p>
+				<p style="color: green">${changePasswordSuccess}</p>
+				<div id="passwordForm">
+					<br>
+					<form method="post" action="changePassword">
+						<label for="originalPassword">Original password:</label><input
+							type="password" class="form-control" id="originalPassword"
+							name="originalPassword" placeholder="Original password"><br>
+						<label for="newPassword">New password:</label><input
+							type="password" class="form-control" id="newPassword"
+							name="newPassword" placeholder="New password"><br> <label
+							for="reenteredPassword">Re-enter new password:</label><input
+							type="password" class="form-control" id="reenteredPassword"
+							name="reenteredPassword" placeholder="Re-enter new password"><br>
+						<button class="btn btn-default">Submit</button>
+					</form>
+				</div>
+			</div>
+		</c:if>
+
 	</div>
+
 
 </body>
 </html>

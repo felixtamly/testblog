@@ -66,7 +66,7 @@ public class MemberDAOImpl implements MemberDAO {
 				.createQuery("Select count(b) from BLOG_BLOGS b group by b.member having b.member.username = :username",
 						Long.class)
 				.setParameter("username", member.getUsername());
-		try {			
+		try {
 			long numberOfBlogs = query.getSingleResult();
 			return numberOfBlogs;
 		} catch (NoResultException e) {
@@ -85,6 +85,21 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
+	public boolean updatePassword(Member member, String password) {
+		if (member != null) {
+			member.setPassword(password);
+
+			em.getTransaction().begin();
+			em.merge(member);
+			em.getTransaction().commit();
+
+			return true;
+		} else
+			return false;
+
+	}
+
+	@Override
 	public boolean removeMember(String username) {
 
 		Member member = findMember(username);
@@ -96,7 +111,6 @@ public class MemberDAOImpl implements MemberDAO {
 		} else {
 			return false;
 		}
-
 	}
-
+	
 }

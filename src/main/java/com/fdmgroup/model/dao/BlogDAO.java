@@ -26,6 +26,8 @@ public interface BlogDAO {
 
 	Blog updateBlog(int blogId, String title, String content);
 
+	List<Blog> getBlogsByPage(int pageId);
+
 
 
 }

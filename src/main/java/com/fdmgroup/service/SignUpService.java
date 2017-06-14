@@ -10,7 +10,7 @@ import com.fdmgroup.model.dao.MemberDAOImpl;
 import com.fdmgroup.model.entity.Member;
 
 public class SignUpService {
-	
+
 	DatabaseConnection connection = new DatabaseConnection();
 
 	public boolean checkAccount(String username, String email) {
@@ -19,6 +19,13 @@ public class SignUpService {
 		Boolean usernameExists = memberDAO.findMemberByUsername(username);
 		Boolean emailExists = memberDAO.findMemberByEmail(email);
 		if (!usernameExists && !emailExists)
+			return true;
+		else
+			return false;
+	}
+
+	public boolean checkReenteredPassword(String password, String reenteredPassword) {
+		if (password.equals(reenteredPassword))
 			return true;
 		else
 			return false;
