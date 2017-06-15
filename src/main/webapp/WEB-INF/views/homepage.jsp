@@ -23,6 +23,11 @@
 	margin: 0;
 	padding: 0;
 }
+
+#pageButton {
+	font-family: 'Nunito', sans-serif;
+	margin: auto;
+}
 </style>
 </head>
 
@@ -30,6 +35,10 @@
 	<jsp:include page="navbar.jsp" />
 
 	<div class="container">
+
+		<c:forEach var="blog2" items="${blogList2}">
+			<p>Print: ${blog2.title}, ${blog2.dateOfPublication}</p>
+		</c:forEach>
 
 		<h1>Latest posts</h1>
 		<br>
@@ -52,6 +61,7 @@
 						${formattedDate}
 					</h5>
 				</form>
+
 				<br>
 				<div class="container">
 					<c:choose>
@@ -72,7 +82,25 @@
 				</form>
 			</div>
 		</c:forEach>
+
+		<p style="text-align: center;">Page ${pageNumber}</p>
+
+		<div id="pageButton" class="btn-group btn-group-justified">
+
+			<c:if test="${not isFirstPage}">
+				<a href="previouspage"
+					class="glyphicon glyphicon-chevron-left btn btn-info"></a>
+			</c:if>
+
+			<c:if test="${not isLastPage}">
+				<a href="nextpage"
+					class="glyphicon glyphicon-chevron-right btn btn-info"></a>
+			</c:if>
+
+		</div>
+		<br>
 	</div>
+
 
 	<!-- 
 	<div class="container">

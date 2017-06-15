@@ -2,6 +2,9 @@ package com.fdmgroup.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,9 +21,17 @@ public class ViewAllBlogsController {
 	ViewAllBlogsService viewAllBlogsService = new ViewAllBlogsService();
 	
 	@RequestMapping(value = {"/", "/homepage"}, method = RequestMethod.GET)
-	public String returnToHomepage(Model model){
-		List<Blog> blogList = viewAllBlogsService.listAllBlogs();
-		model.addAttribute("blogList", blogList);
+	public String returnToHomepage(Model model, HttpSession session){
+		PagedListHolder<Blog> pagedBlogList = new PagedListHolder<Blog>(viewAllBlogsService.listAllBlogs());
+		pagedBlogList.setPageSize(5);
+	
+		pagedBlogList.setPage(0);
+		
+		session.setAttribute("pagedBlogList", pagedBlogList);
+		session.setAttribute("isFirstPage", pagedBlogList.isFirstPage());
+		session.setAttribute("isLastPage", pagedBlogList.isLastPage());
+		session.setAttribute("pageNumber", pagedBlogList.getPage()+1);
+		model.addAttribute("blogList", pagedBlogList.getPageList());
 		return "homepage";
 	}
 	
@@ -30,6 +41,32 @@ public class ViewAllBlogsController {
 		ModelAndView model = new ModelAndView("homepage", "blogList", blogList);
 		
 		return model;
+	}
+	
+	@RequestMapping(value="/nextpage")
+	public String showNextPage(Model model, HttpSession session) {
+		@SuppressWarnings("unchecked")
+		PagedListHolder<Blog> pagedBlogList = (PagedListHolder<Blog>) session.getAttribute("pagedBlogList");
+		pagedBlogList.nextPage();
+		session.setAttribute("isFirstPage", pagedBlogList.isFirstPage());
+		session.setAttribute("isLastPage", pagedBlogList.isLastPage());
+		session.setAttribute("pageNumber", pagedBlogList.getPage()+1);
+		session.setAttribute("pagedBlogList", pagedBlogList);
+		model.addAttribute("blogList", pagedBlogList.getPageList());
+		return "homepage";
+	}
+	
+	@RequestMapping(value="/previouspage")
+	public String showPreviousPage(Model model, HttpSession session) {
+		@SuppressWarnings("unchecked")
+		PagedListHolder<Blog> pagedBlogList = (PagedListHolder<Blog>) session.getAttribute("pagedBlogList");
+		pagedBlogList.previousPage();
+		session.setAttribute("isFirstPage", pagedBlogList.isFirstPage());
+		session.setAttribute("isLastPage", pagedBlogList.isLastPage());
+		session.setAttribute("pageNumber", pagedBlogList.getPage()+1);
+		session.setAttribute("pagedBlogList", pagedBlogList);
+		model.addAttribute("blogList", pagedBlogList.getPageList());
+		return "homepage";
 	}
 	
 }

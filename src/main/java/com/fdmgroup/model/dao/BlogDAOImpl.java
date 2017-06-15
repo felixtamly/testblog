@@ -19,7 +19,7 @@ public class BlogDAOImpl implements BlogDAO {
 	public BlogDAOImpl(EntityManager em) {
 		this.em = em;
 	}
-	
+
 	public void setTemplate(JdbcTemplate template) {
 		this.template = template;
 	}
@@ -79,7 +79,7 @@ public class BlogDAOImpl implements BlogDAO {
 						Blog.class)
 				.setParameter("member", member);
 		blogList = query.getResultList();
-		
+
 		return blogList;
 	}
 
@@ -91,19 +91,20 @@ public class BlogDAOImpl implements BlogDAO {
 				.createQuery("Select b from BLOG_BLOGS b where b.member = :member order by lower(b.title)", Blog.class)
 				.setParameter("member", member);
 		blogList = query.getResultList();
-		
+
 		return blogList;
 	}
-	
+
 	@Override
 	public List<Blog> listBlogsByMemberByTitleDesc(Member member) {
 		List<Blog> blogList = null;
 
 		TypedQuery<Blog> query = em
-				.createQuery("Select b from BLOG_BLOGS b where b.member = :member order by lower(b.title) desc", Blog.class)
+				.createQuery("Select b from BLOG_BLOGS b where b.member = :member order by lower(b.title) desc",
+						Blog.class)
 				.setParameter("member", member);
 		blogList = query.getResultList();
-		
+
 		return blogList;
 	}
 
@@ -136,34 +137,28 @@ public class BlogDAOImpl implements BlogDAO {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public List<Blog> getBlogsByPage(int pageId) {
 		List<Blog> trimmedResultList = null;
-		int begin = pageId*5-5;
-		int end = pageId*5;
-		
+		int begin = pageId * 5 - 5;
+		int end = pageId * 5;
+
 		String jpql = "Select b from BLOG_BLOGS b order by b.dateOfPublication desc";
 		TypedQuery<Blog> queryResult = em.createQuery(jpql, Blog.class);
 		List<Blog> resultList = queryResult.getResultList();
-		for(Blog blog : resultList) System.out.println(blog.getBlogId());
-					
+		for (Blog blog : resultList)
+			System.out.println(blog.getBlogId());
+
+		if (resultList.size() < end)
+			trimmedResultList = resultList.subList(begin, resultList.size());
+		else
 			trimmedResultList = resultList.subList(begin, end);
-		
-		for(Blog blog : trimmedResultList) System.out.println("trimmed: " + blog.getBlogId());
-		
+
+		for (Blog blog : trimmedResultList)
+			System.out.println("trimmed: " + blog.getBlogId());
+
 		return trimmedResultList;
-//		return template.query(jpql, new RowMapper<Blog>(){
-//			public Blog mapRow(ResultSet rs, int row) throws SQLException {
-//				Blog blog = new Blog();
-//				blog.setBlogId(rs.getInt(1));
-//				blog.setMember(rs.getObject(2, Member.class));
-//				blog.setDateOfPublication(rs.getDate(3));
-//				blog.setTitle(rs.getString(4));
-//				blog.setContent(rs.getString(5));
-//				return blog;
-//			}
-//		});
 	}
 
 }
