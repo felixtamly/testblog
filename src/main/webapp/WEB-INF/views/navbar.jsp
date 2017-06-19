@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<link href="https://fonts.googleapis.com/css?family=Overpass" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Overpass"
+	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Nunito"
+	rel="stylesheet">
 
 <style>
 body {
@@ -28,6 +30,7 @@ body {
 			<c:choose>
 				<c:when test="${empty sessionUser}">
 					<li><a href="homepage">Home</a></li>
+					<li><a href="searchPage">Search</a></li>
 					<li><a href="signup">Sign up</a></li>
 					<li><a href="login">Log in</a></li>
 				</c:when>
@@ -37,6 +40,7 @@ body {
 					<li><a href="writeblog">Write a post</a></li>
 					<li><a href="listYourPosts">Your posts</a></li>
 					<li><a href="listYourDetails">Your Details</a></li>
+					<li><a href="searchPage">Search</a></li>
 					<li><a href="Logout">Log out</a></li>
 				</c:otherwise>
 			</c:choose>
@@ -46,10 +50,12 @@ body {
 		<c:choose>
 			<c:when test="${!empty sessionUser}">
 				<ul class="nav navbar-nav navbar-right">
-					<li><p id="welcomeback">Welcome back, ${sessionUser.username}</p></li>
+					<li><p id="welcomeback">Welcome back,
+							${sessionUser.username}</p></li>
 				</ul>
 			</c:when>
 		</c:choose>
+
 	</div>
 
 

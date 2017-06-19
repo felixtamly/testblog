@@ -65,13 +65,14 @@
 					<form method="post" action="changePassword">
 						<label for="originalPassword">Original password:</label><input
 							type="password" class="form-control" id="originalPassword"
-							name="originalPassword" placeholder="Original password"><br>
+							name="originalPassword" placeholder="Original password" required><br>
 						<label for="newPassword">New password:</label><input
 							type="password" class="form-control" id="newPassword"
-							name="newPassword" placeholder="New password"><br> <label
-							for="reenteredPassword">Re-enter new password:</label><input
+							name="newPassword" placeholder="New password" required><br>
+						<label for="reenteredPassword">Re-enter new password:</label><input
 							type="password" class="form-control" id="reenteredPassword"
-							name="reenteredPassword" placeholder="Re-enter new password"><br>
+							name="reenteredPassword" placeholder="Re-enter new password"
+							required><br>
 						<button class="btn btn-default">Submit</button>
 					</form>
 				</div>

@@ -28,6 +28,8 @@ public interface BlogDAO {
 
 	List<Blog> getBlogsByPage(int pageId);
 
+	List<Blog> searchBlogByTitle(String title);
+
 
 
 }

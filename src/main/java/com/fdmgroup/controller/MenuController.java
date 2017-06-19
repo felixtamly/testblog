@@ -41,4 +41,9 @@ public class MenuController {
 		return "memberdetails";
 	}
 	
+	@RequestMapping("/searchPage")
+	public String goToSearchPage() {
+		return "searchpage";
+	}
+	
 }

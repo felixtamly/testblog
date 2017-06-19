@@ -147,18 +147,24 @@ public class BlogDAOImpl implements BlogDAO {
 		String jpql = "Select b from BLOG_BLOGS b order by b.dateOfPublication desc";
 		TypedQuery<Blog> queryResult = em.createQuery(jpql, Blog.class);
 		List<Blog> resultList = queryResult.getResultList();
-		for (Blog blog : resultList)
-			System.out.println(blog.getBlogId());
 
 		if (resultList.size() < end)
 			trimmedResultList = resultList.subList(begin, resultList.size());
 		else
 			trimmedResultList = resultList.subList(begin, end);
 
-		for (Blog blog : trimmedResultList)
-			System.out.println("trimmed: " + blog.getBlogId());
-
 		return trimmedResultList;
+	}
+
+	@Override
+	public List<Blog> searchBlogByTitle(String title) {
+		String jpql = "Select b from BLOG_BLOGS b where lower(b.title) like lower(:title) order by b.dateOfPublication desc";
+
+		TypedQuery<Blog> queryResult = em.createQuery(jpql, Blog.class);
+		queryResult.setParameter("title", "%"+title+"%");
+		List<Blog> resultList = queryResult.getResultList();
+		
+		return resultList;
 	}
 
 }
